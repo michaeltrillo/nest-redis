@@ -1,0 +1,66 @@
+services:
+  redis-cluster:
+    image: 'redis:7-alpine'
+    command: redis-cli --cluster create redis-node-1:6373 redis-node-2:6374 redis-node-3:6375 redis-node-4:6376 redis-node-5:6377 redis-node-6:6378 --cluster-replicas 1 --cluster-yes
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+      - redis-node-4
+      - redis-node-5
+      - redis-node-6
+  redis-node-1:
+    image: 'redis:7-alpine'
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - '6373:6373'
+    volumes:
+      - redis-node-1-data:/var/lib/redis
+      - ./config/redis-node-1.conf:/usr/local/etc/redis/redis.conf
+  redis-node-2:
+    image: 'redis:7-alpine'
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - '6374:6374'
+    volumes:
+      - redis-node-2-data:/var/lib/redis
+      - ./config/redis-node-2.conf:/usr/local/etc/redis/redis.conf
+  redis-node-3:
+    image: 'redis:7-alpine'
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - '6375:6375'
+    volumes:
+      - redis-node-3-data:/var/lib/redis
+      - ./config/redis-node-3.conf:/usr/local/etc/redis/redis.conf
+  redis-node-4:
+    image: 'redis:7-alpine'
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - '6376:6376'
+    volumes:
+      - redis-node-4-data:/var/lib/redis
+      - ./config/redis-node-4.conf:/usr/local/etc/redis/redis.conf
+  redis-node-5:
+    image: 'redis:7-alpine'
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - '6377:6377'
+    volumes:
+      - redis-node-5-data:/var/lib/redis
+      - ./config/redis-node-5.conf:/usr/local/etc/redis/redis.conf
+  redis-node-6:
+    image: 'redis:7-alpine'
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - '6378:6378'
+    volumes:
+      - redis-node-6-data:/var/lib/redis
+      - ./config/redis-node-6.conf:/usr/local/etc/redis/redis.conf
+volumes:
+  redis-node-1-data:
+  redis-node-2-data:
+  redis-node-3-data:
+  redis-node-4-data:
+  redis-node-5-data:
+  redis-node-6-data:
